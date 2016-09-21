@@ -1,7 +1,9 @@
 import React from 'react';
+import {Link} from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import {Card,CardMedia,CardText,CardTitle,CardHeader} from 'material-ui/Card';
 import MenuItem from 'material-ui/MenuItem';
 
 export default class Navbar extends React.Component {
@@ -18,7 +20,13 @@ export default class Navbar extends React.Component {
       drawerStatus : !this.state.drawerStatus
     });
   }
-
+  navigate(segment){
+      this.drawerToggle()
+      if(segment === undefined){
+        segment = "";
+      }
+      this.props.history.push('/' + segment)
+  }
   render(){
     const styles = {
 
@@ -30,16 +38,27 @@ export default class Navbar extends React.Component {
     }
     return (
       <div>
-        <AppBar title="Swen News"
+        <AppBar title="SweNewS"
           onLeftIconButtonTouchTap = {this.drawerToggle.bind(this)}
           style = {styles.navBar}
         />
-        <Drawer open = {this.state.drawerStatus}
+        <Drawer
+          width = {300}
+          open = {this.state.drawerStatus}
           docked = {false}
           onRequestChange={(drawerStatus) => this.setState({drawerStatus})}
         >
-          <MenuItem>News</MenuItem>
-          <MenuItem>Life</MenuItem>
+          <Card>
+            <CardHeader
+                title="Login"
+                subtitle="guest"
+                avatar=""
+              />
+          </Card>
+          <MenuItem primaryText="Terbaru"
+                    onTouchTap={this.navigate.bind(this,"")} />
+          <MenuItem primaryText="Headline"
+                    onTouchTap={this.navigate.bind(this,'headline')}/>
         </Drawer>
       </div>
 

@@ -15,17 +15,8 @@ module.exports = {
       exclude : /node_modules/,
       loader : ['babel-loader'],
       query:{
-        presets : ['es2015','react','stage-1']
-      },
-      plugins: [
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-          minimize : true,
-          compress: {warnings: false},
-          output: {comments: false},
-          sourceMap: true
-        })
-      ]
+        presets : ['es2015','react']
+      }
     }]
   }
 }

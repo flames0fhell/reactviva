@@ -9,7 +9,9 @@ import {Card,
 import LazyLoad from 'react-lazy-load';
 import Divider from 'material-ui/Divider';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
+import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
+import Subheader from 'material-ui/Subheader';
 
 import axios from 'axios';
 
@@ -61,6 +63,11 @@ export default class Content extends React.Component{
       }
     }
   }
+  componentWillUnmount(){
+    window.onscroll = function(){
+
+    }
+  }
   lanjut(){
     var _this = this;
     var pageStart = this.state.terbaru.length;
@@ -87,14 +94,22 @@ export default class Content extends React.Component{
       });
     });
   }
-  actionTap(x){
-
+  actionTap(obj){
+    console.log(this.props);
+    this.props.history.push('/read/' + obj.id);
   }
   cardLoad(object,i){
-    var tanggal = Moment(object.date_publish)
-                  .format("ddd, DD MMM YYYY - HH:mm", "id");
+    var tc = Moment(object.date_publish);
+    var tn = Moment();
+    var selisih = tn.diff(tc,'hours');
+    if(selisih <= 1){
+      var tanggal = Moment(object.date_publish)
+                    .fromNow();
+    }else{
+      var tanggal = tc.format("ddd, DD MMM YYYY - HH:mm");
+    }
     return (
-      <div>
+      <div onClick={this.actionTap.bind(this,object)}>
         <Card style={{marginBottom : '10px'}}>
           <LazyLoad offset={1000}>
             <CardMedia>
@@ -127,6 +142,9 @@ export default class Content extends React.Component{
     const last_publish_date = this.state.last_publish_date;
     return(
       <div style={{paddingTop : '70px'}}>
+        <div className="container">
+          <h4>Berita Terbaru</h4>
+        </div>
         {
           terbaru.map(function(object,i){
           return (
@@ -135,7 +153,11 @@ export default class Content extends React.Component{
             </div>
           )
         })}
-        <RaisedButton onTouchTap={this.lanjut.bind(this)} label="Selanjutnya ..." fullWidth={true} />
+        <div style={{margin : 'auto',width:'60px'}}>
+
+          <CircularProgress />
+        </div>
+        <RaisedButton label="Selanjutnya ..." fullWidth={true} />
       </div>
     );
   }

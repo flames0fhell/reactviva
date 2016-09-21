@@ -18,7 +18,7 @@ export default class Template extends React.Component {
     return(
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <Navbar />
+          <Navbar history={this.props.history} />
         </MuiThemeProvider>
         <MuiThemeProvider muiTheme={muiTheme}>
           {this.props.children}
