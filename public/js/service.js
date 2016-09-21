@@ -44,14 +44,14 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
-	console.log("ini masuk sw");
-	var i = 1;
-	setInterval(function () {
-	  console.log("SW : " + i);
-	  i++;
-	}, 500);
+	importScripts('./cache-polyfill.js');
+	self.addEventListener('install', function (e) {
+	  console.log("Install Event");
+	  console.log(e);
+	  e.waitUntil();
+	});
 
 /***/ }
 /******/ ]);
